@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pygame Fighting Game Guide</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Pygame Fighting Game Guide</h1>
+        <p>Learn how to build a 2D fighting game like Brawlhalla using Python & Pygame</p>
+    </header>
+
+    <nav>
+        <a href="#setup">Setup</a>
+        <a href="#game-window">Game Window</a>
+        <a href="#player">Player</a>
+        <a href="#movement">Movement</a>
+        <a href="#attacks">Attacks</a>
+        <a href="#github">GitHub</a>
+    </nav>
+
+    <section id="setup">
+        <h2>1. Install Python & Pygame</h2>
+        <p>Download Python from <a href="https://python.org" target="_blank">python.org</a>.</p>
+        <pre><code>pip install pygame</code></pre>
+    </section>
+
+    <section id="game-window">
+        <h2>2. Create the Game Window</h2>
+        <p>Add the following code in <code>main.py</code>:</p>
+        <pre><code>import pygame
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption("2D Fighting Game")
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    screen.fill((30, 30, 30))
+    pygame.display.update()
+pygame.quit()</code></pre>
+    </section>
+
+    <section id="player">
+        <h2>3. Add a Player</h2>
+        <p>Create an <code>assets/</code> folder and add a player sprite. Then load and draw it:</p>
+        <pre><code>player_img = pygame.image.load("assets/player.png")</code></pre>
+    </section>
+
+    <section id="movement">
+        <h2>4. Add Movement</h2>
+        <p>Use arrow keys to move the player:</p>
+        <pre><code>if keys[pygame.K_LEFT]: player_x -= 5
+if keys[pygame.K_RIGHT]: player_x += 5</code></pre>
+    </section>
+
+    <section id="attacks">
+        <h2>5. Add Attacks</h2>
+        <p>Press <strong>Spacebar</strong> to attack:</p>
+        <pre><code>if keys[pygame.K_SPACE]:  
+    player_img = attack_frames[0]  # Attack animation</code></pre>
+    </section>
+
+    <section id="github">
+        <h2>6. Publish on GitHub</h2>
+        <p>Push your project to GitHub:</p>
+        <pre><code>git init
+git add .
+git commit -m "First commit"
+git push -u origin main</code></pre>
+    </section>
+
+    <footer>
+        <p>Created by [Your Name] | <a href="https://github.com/your-username" target="_blank">View on GitHub</a></p>
+    </footer>
+
+</body>
+</html>
