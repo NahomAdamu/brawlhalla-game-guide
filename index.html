@@ -1,82 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pygame Fighting Game Guide</title>
+    <title>Pygame Fighter Guide</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        function toggleCheck(event) {
+            event.target.classList.toggle("checked");
+        }
+    </script>
+    
+
 </head>
 <body>
-
     <header>
-        <h1>Pygame Fighting Game Guide</h1>
-        <p>Learn how to build a 2D fighting game like Brawlhalla using Python & Pygame</p>
+        <h1>Guide: Skapa ett Fightingspel i Pygame med Visual Studio Code</h1>
+        <p>Denna guide hjälper dig att skapa ett enkelt fightingspel med Pygame och Visual Studio Code.</p>
     </header>
 
-    <nav>
-        <a href="#setup">Setup</a>
-        <a href="#game-window">Game Window</a>
-        <a href="#player">Player</a>
-        <a href="#movement">Movement</a>
-        <a href="#attacks">Attacks</a>
-        <a href="#github">GitHub</a>
-    </nav>
+    <main>
+        <section>
+            <h2>Steg-för-steg-instruktioner</h2>
+            <h3>1. Installera Visual Studio Code och Python</h3>
+            <p>Ladda ner och installera Python från <a href="https://python.org">python.org</a>.</p>
+            <p>Ladda ner och installera Visual Studio Code från <a href="https://code.visualstudio.com">code.visualstudio.com</a>.</p>
+            <p>Öppna Visual Studio Code och installera Python-tillägget via Extensions Marketplace.</p>
+        </section>
 
-    <section id="setup">
-        <h2>1. Install Python & Pygame</h2>
-        <p>Download Python from <a href="https://python.org" target="_blank">python.org</a>.</p>
-        <pre><code>pip install pygame</code></pre>
-    </section>
+        <section>
+            <h3>2. Installera Pygame</h3>
+            <p>Öppna en terminal i Visual Studio Code och skriv:</p>
+            <pre><code>pip install pygame</code></pre>
+        </section>
 
-    <section id="game-window">
-        <h2>2. Create the Game Window</h2>
-        <p>Add the following code in <code>main.py</code>:</p>
-        <pre><code>import pygame
+        <section>
+             
+             <h3>3. Skapa ett nytt projekt</h3>
+             <ul>
+                <li>Skapa en ny mapp för ditt spelprojekt.</li>
+                <li>Öppna mappen i Visual Studio Code.</li>
+                <li>Skapa en ny Python-fil, t.ex. <code>game.py</code>.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>4. Skapa Spelfönstret</h3>
+            <p>Koden initierar Pygame, skapar ett spel-fönster på 1000x600 pixlar och sätter fönstrets titel till "Brawler".</p>
+            <pre><code>import pygame
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("2D Fighting Game")
-running = True
+
+# Definiera skärmstorlek
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 600
+
+# Skapa spel-fönstret
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Brawler")</code></pre>
+        </section>
+
+        <section>
+            <h3>5. Ladda in Grafik och Ljud</h3>
+         </p>Koden laddar en bakgrundsbild från filen "background.jpg" och en ljudfil för ett svärdsljud från "sword.wav". convert_alpha() används för att hantera genomskinlighet i bilden.</p>
+            <pre><code>bg_image = pygame.image.load("assets/images/background.jpg").convert_alpha()
+sword_fx = pygame.mixer.Sound("assets/audio/sword.wav")</code></pre>
+        </section>
+
+        <section>
+            <h3>6. Skapa en Fighter-klass</h3>
+        </p>Koden definierar en klass Fighter som representerar en spelkaraktär. När en ny fighter skapas, sätts dess position med hjälp av x och y, och en rektangel (self.rect) skapas för att definiera dess storlek och position. Karaktären får också en starthälsa på 100.</p>
+            <pre><code>class Fighter():
+    def __init__(self, x, y):
+        self.rect = pygame.Rect(x, y, 80, 180)
+        self.health = 100</code></pre>
+        </section>
+
+        <section>
+            <h3>7. Hantera Spelarnas Rörelser</h3>
+        </p>Koden kollar om tasten "A" eller "D" är nedtryckta. Om "A" trycks, flyttas spelaren vänster, och om "D" trycks, flyttas spelaren höger.</p>
+            <pre><code>keys = pygame.key.get_pressed()
+if keys[pygame.K_a]:
+    player1.rect.x -= 10
+if keys[pygame.K_d]:
+    player1.rect.x += 10</code></pre>
+        </section>
+
+        <section>
+            <h3>8. Implementera Strider</h3>
+         </p>Koden kollar om spelare 1s rektangel kolliderar med spelare 2s rektangel. Om de kolliderar, minskar spelare 2s hälsa med 10.</p>
+            <pre><code>if player1.rect.colliderect(player2.rect):
+    player2.health -= 10</code></pre>
+        </section>
+
+        <section>
+            <h3>9. Skapa Spelets Huvudloop</h3>
+         </p>Koden visar en bakgrundsbild på skärmen och uppdaterar den kontinuerligt så länge running är True. Loopen fortsätter tills running sätts till False.</p>
+            <pre><code>running = True
 while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    screen.fill((30, 30, 30))
-    pygame.display.update()
+    screen.blit(bg_image, (0, 0))
+    pygame.display.update()</code></pre>
+        </section>
+
+        <section>
+            <h3>10. Hantera Händelser och Avsluta Spelet</h3>
+         </p>Koden stänger programmet när fönstret stängs genom att sätta running = False och avsluta pygame med pygame.quit().</p>
+            <pre><code>for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+        running = False
 pygame.quit()</code></pre>
-    </section>
+        </section>
 
-    <section id="player">
-        <h2>3. Add a Player</h2>
-        <p>Create an <code>assets/</code> folder and add a player sprite. Then load and draw it:</p>
-        <pre><code>player_img = pygame.image.load("assets/player.png")</code></pre>
-    </section>
+        <section>
+            <h2>Checklista</h2>
+            <ul class="checklist">
+                <li onclick="toggleCheck(event)">Har du installerat Python och Visual Studio Code?</li>
+                <li onclick="toggleCheck(event)">Är Python-tillägget installerat i Visual Studio Code?</li>
+                <li onclick="toggleCheck(event)">Har du installerat Pygame med <code>pip install pygame</code>?</li>
+                <li onclick="toggleCheck(event)">Har du skapat en projektmapp och en Python-fil?</li>
+                <li onclick="toggleCheck(event)">Kan du skapa och visa spelfönstret?</li>
+                <li onclick="toggleCheck(event)">Är bakgrundsbilden och ljudet laddade korrekt?</li>
+                <li onclick="toggleCheck(event)">Fungerar Fighter-klassen?</li>
+                <li onclick="toggleCheck(event)">Kan spelarna röra sig?</li>
+                <li onclick="toggleCheck(event)">Kan spelarna attackera varandra?</li>
+                <li onclick="toggleCheck(event)">Är spelets huvudloop igång?</li>
+                <li onclick="toggleCheck(event)">Kan spelet avslutas korrekt?</li>
+            </ul>
+        </section>
 
-    <section id="movement">
-        <h2>4. Add Movement</h2>
-        <p>Use arrow keys to move the player:</p>
-        <pre><code>if keys[pygame.K_LEFT]: player_x -= 5
-if keys[pygame.K_RIGHT]: player_x += 5</code></pre>
-    </section>
-
-    <section id="attacks">
-        <h2>5. Add Attacks</h2>
-        <p>Press <strong>Spacebar</strong> to attack:</p>
-        <pre><code>if keys[pygame.K_SPACE]:  
-    player_img = attack_frames[0]  # Attack animation</code></pre>
-    </section>
-
-    <section id="github">
-        <h2>6. Publish on GitHub</h2>
-        <p>Push your project to GitHub:</p>
-        <pre><code>git init
-git add .
-git commit -m "First commit"
-git push -u origin main</code></pre>
-    </section>
+        <section>
+            <h2>Vanliga Frågor (FAQ)</h2>
+            <details>
+                <summary>Spelet startar inte, vad gör jag?</summary>
+                <p>Kontrollera att du har installerat Pygame med <code>pip install pygame</code>.</p>
+            </details>
+            <details>
+                <summary>Varför rör sig inte min spelare?</summary>
+                <p>Se till att du har rätt tangentbordshantering och att <code>pygame.key.get_pressed()</code> används korrekt.</p>
+            </details>
+            <details>
+                <summary>Ljudet fungerar inte, vad kan vara fel?</summary>
+                <p>Dubbelkolla att ljudfilerna finns på rätt plats och att Pygame Mixer är initierad.</p>
+            </details>
+            <details>
+                <summary>Hur kan jag lägga till fler animationer?</summary>
+                <p>Lägg till fler sprites i en spritesheet och justera animationerna i din Fighter-klass.</p>
+            </details>
+            <details>
+                <summary>Kan jag använda andra bilder och ljud?</summary>
+                <p>Ja! Byt ut filerna i <code>assets/</code>-mappen och uppdatera din kod.</p>
+            </details>
+        </section>
+    </main>
 
     <footer>
-        <p>Created by [Your Name] | <a href="https://github.com/your-username" target="_blank">View on GitHub</a></p>
+        <p>&copy; 2024 Pygame Guide</p>
     </footer>
-
 </body>
 </html>
